@@ -62,9 +62,9 @@ class UrlController extends Controller
 
 	public function index()
 	{
-		$urls = Url::select('*')
+		$urls = Url::select('*')->withTrashed()
 			->orderByDesc('created_at')
-			->get();
+			->paginate(10);
 
 		return response()->json($urls);
 	}
@@ -80,5 +80,28 @@ class UrlController extends Controller
 		$url->delete();
 
 		return response()->json(['message'=>'Deleted']);
+	}
+
+	public function restore($id)
+	{
+		// پیدا کردن لینک حتی اگر حذف شده باشد
+		$url = Url::withTrashed()->find($id);
+
+		if (!$url) {
+			return response()->json(['message' => 'Not found'], 404);
+		}
+
+		// اگر حذف نشده بود
+		if (!$url->trashed()) {
+			return response()->json(['message' => 'URL is not deleted'], 400);
+		}
+
+		// بازگرداندن
+		$url->restore();
+
+		return response()->json([
+			'message' => 'URL restored successfully',
+			'short_url' => url($url->short_code)
+		], 200);
 	}
 }

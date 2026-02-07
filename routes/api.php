@@ -6,4 +6,5 @@ Route::prefix('v1')->group(function () {
 	Route::post('shorten', [UrlController::class, 'store']);
 	Route::get('/urls', [UrlController::class, 'index']);
 	Route::delete('/urls/{id}', [UrlController::class, 'destroy']);
+	Route::post('/urls/{id}/restore', [UrlController::class, 'restore']);
 });
