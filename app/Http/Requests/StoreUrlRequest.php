@@ -15,7 +15,8 @@ class StoreUrlRequest extends FormRequest
     public function rules(): array
     {
         return [
-			'url' => ['required', 'url', 'max:2048']
-        ];
+			'url' => ['required', 'url', 'max:2048'],
+			'expire_days' => ['nullable', 'integer', 'min:1', 'max:365'] // اختیاری، بین 1 تا 365 روز
+		];
     }
 }

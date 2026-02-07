@@ -12,14 +12,30 @@ class UrlController extends Controller
 {
 	public function store(StoreUrlRequest $request)
 	{
+		$days = $request->input('expire_days', 30);
+
+		// چک لینک تکراری
+		$url = Url::where('original_url', $request->url)->first();
+		if ($url) {
+			// ویرایش تاریخ انقضا
+			$url->expires_at = now()->addDays($days);
+			$url->save();
+			return response()->json([
+				'short_url' => url($url->short_code),
+				'message' => 'URL already exists, expiration updated'
+			], 200);
+		}
+
+		// تولید کد یکتا
 		do {
 			$code = Str::random(6);
 		} while (Url::where('short_code',$code)->exists());
 
+		// ایجاد رکورد جدید
 		$url = Url::create([
 			'original_url' => $request->url,
 			'short_code' => $code,
-			'expires_at' => now()->addDays(30)
+			'expires_at' => now()->addDays($days)
 		]);
 
 		return response()->json([
