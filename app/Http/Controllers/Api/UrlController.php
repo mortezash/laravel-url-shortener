@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUrlRequest;
+use App\Http\Resources\UrlResource;
 use App\Models\Url;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -20,10 +21,8 @@ class UrlController extends Controller
 			// ویرایش تاریخ انقضا
 			$url->expires_at = now()->addDays($days);
 			$url->save();
-			return response()->json([
-				'short_url' => url($url->short_code),
-				'message' => 'URL already exists, expiration updated'
-			], 200);
+
+			return new UrlResource($url);
 		}
 
 		// تولید کد یکتا
@@ -38,9 +37,7 @@ class UrlController extends Controller
 			'expires_at' => now()->addDays($days)
 		]);
 
-		return response()->json([
-			'short_url' => url($code)
-		], 201);
+		return new UrlResource($url);
 	}
 
 	public function redirect($code)
@@ -66,7 +63,7 @@ class UrlController extends Controller
 			->orderByDesc('created_at')
 			->paginate(10);
 
-		return response()->json($urls);
+		return UrlResource::collection($urls);
 	}
 
 	public function destroy($id)
