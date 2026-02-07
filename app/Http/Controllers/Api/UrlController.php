@@ -26,4 +26,21 @@ class UrlController extends Controller
 			'short_url' => url($code)
 		], 201);
 	}
+
+	public function redirect($code)
+	{
+		$url = Url::where('short_code', $code)->first();
+
+		if (!$url) {
+			return response()->json(['message'=>'Not found'],404);
+		}
+
+		if ($url->expires_at && now()->gt($url->expires_at)) {
+			return response()->json(['message'=>'Link expired'],410);
+		}
+
+		$url->increment('clicks');
+
+		return redirect($url->original_url, 301);
+	}
 }
