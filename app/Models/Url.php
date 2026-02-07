@@ -15,6 +15,8 @@ class Url extends Model
 		'clicks',
 		'expires_at'
 	];
-
+	protected $casts = [
+		'expires_at' => 'datetime',
+	];
 	protected $dates = ['deleted_at'];
 }
