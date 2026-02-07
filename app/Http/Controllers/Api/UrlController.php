@@ -59,4 +59,26 @@ class UrlController extends Controller
 
 		return redirect($url->original_url, 301);
 	}
+
+	public function index()
+	{
+		$urls = Url::select('*')
+			->orderByDesc('created_at')
+			->get();
+
+		return response()->json($urls);
+	}
+
+	public function destroy($id)
+	{
+		$url = Url::find($id);
+
+		if (!$url) {
+			return response()->json(['message'=>'Not found'],404);
+		}
+
+		$url->delete();
+
+		return response()->json(['message'=>'Deleted']);
+	}
 }
