@@ -1,0 +1,164 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Laravel URL Shortener API",
+        "description": "مستندات API کوتاه‌کننده لینک",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/v1/shorten": {
+            "post": {
+                "tags": [
+                    "URLs"
+                ],
+                "summary": "Create a new short URL",
+                "operationId": "bedcb3dc4772b11f1ea62a5a56b6043a",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "url",
+                                    "expire_days"
+                                ],
+                                "properties": {
+                                    "url": {
+                                        "type": "string",
+                                        "example": "https://google.com"
+                                    },
+                                    "expire_days": {
+                                        "type": "integer",
+                                        "example": 30
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "URL updated if exists"
+                    },
+                    "201": {
+                        "description": "New URL created successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
+        "/{code}": {
+            "get": {
+                "tags": [
+                    "URLs"
+                ],
+                "summary": "Redirect to the original URL",
+                "operationId": "c8c8fc680d9e06b3ce3c2c137dde45b8",
+                "parameters": [
+                    {
+                        "name": "code",
+                        "in": "path",
+                        "description": "Short code",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "301": {
+                        "description": "Redirects to original URL"
+                    },
+                    "404": {
+                        "description": "URL not found"
+                    },
+                    "410": {
+                        "description": "URL expired"
+                    }
+                }
+            }
+        },
+        "/api/v1/urls": {
+            "get": {
+                "tags": [
+                    "URLs"
+                ],
+                "summary": "List URLs with pagination",
+                "operationId": "84cf272f0d1bb8b46492eeded2344db5",
+                "responses": {
+                    "200": {
+                        "description": "Paginated list of URLs"
+                    }
+                }
+            }
+        },
+        "/api/v1/urls/{id}": {
+            "delete": {
+                "tags": [
+                    "URLs"
+                ],
+                "summary": "Soft delete a URL",
+                "operationId": "dca74e1c6d4fae7fc7903808c97c037c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "URL ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "URL soft deleted successfully"
+                    },
+                    "404": {
+                        "description": "URL not found"
+                    }
+                }
+            }
+        },
+        "/api/v1/urls/{id}/restore": {
+            "post": {
+                "tags": [
+                    "URLs"
+                ],
+                "summary": "Restore a soft-deleted URL",
+                "operationId": "f4a5aa570e23d31c7ae1067b54e7381f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "URL ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "URL restored successfully"
+                    },
+                    "404": {
+                        "description": "URL not found"
+                    },
+                    "400": {
+                        "description": "URL is not deleted"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "URLs",
+            "description": "Operations about URLs"
+        }
+    ]
+}
