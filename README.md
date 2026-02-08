@@ -141,6 +141,28 @@ docker compose up --build -d
 docker compose exec app php artisan test
 ```
 
+
+🧪 تست API با Postman
+برای راحت‌تر تست کردن API، یک Postman Collection آماده شده است که تمام endpointها را شامل می‌شود.
+📂 فایل‌های Postman
+فایل‌های Postman در مسیر زیر قرار دارند:
+
+/public/postman<br>
+├── URL Shortener API.postman_collection.json<br>
+└── url shortener api Environment.postman_environment.json
+
+📥 ایمپورت کردن در Postman
+1. Postman را اجرا کنید
+2. روی Import کلیک کنید
+3. فایل های در مسیر بالا که ذکر شد را نتخاب و ایمپورت کنید
+
+⚙️ تنظیم Environment
+مقدار shortener_base_url را در Environment در صورت نیاز تغییر دهید
+1. اگر پروژه را دستی اجرا کرده اید مقدار shortener_base_url را به http://localhost:8000 تغییر دهید
+2. اگر پروژه را با داکر اجرا کرده اید مقدار shortener_base_url را به http://localhost:8020 تغییر دهید
+
+برای اجرا فقط کافیست دکمه send را در هر درخواست بزنید. بقیه متغیر ها در تمامی endpoint ها به صورت خودکار جایگذاری میشوند
+
 ✨ توسعه‌دهنده
 Developed by Morteza Shahpasand
 
