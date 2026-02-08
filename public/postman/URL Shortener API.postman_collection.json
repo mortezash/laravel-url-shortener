@@ -1,0 +1,217 @@
+{
+  "info": {
+    "_postman_id": "8a2e21d7-a166-4e6a-a74a-d049129c3ad4",
+    "name": "URL Shortener API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "1927218",
+    "_collection_link": "https://go.postman.co/collection/1927218-8a2e21d7-a166-4e6a-a74a-d049129c3ad4?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "create ne short link",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var jsonData = JSON.parse(responseBody); \r",
+              "postman.setGlobalVariable(\"short_url_id\", jsonData.data.id);\r",
+              "postman.setGlobalVariable(\"short_url_code\", jsonData.data.short_code);"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disabledSystemHeaders": {
+          "accept": true
+        }
+      },
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"url\":\"https://googgle.com\",\r\n  \"expire_days\": 10\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{shortener_base_url}}/api/v1/shorten",
+          "host": [
+            "{{shortener_base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "shorten"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "use short link",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{shortener_base_url}}/{{short_url_code}}",
+          "host": [
+            "{{shortener_base_url}}"
+          ],
+          "path": [
+            "{{short_url_code}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "list short links",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{shortener_base_url}}/api/v1/urls",
+          "host": [
+            "{{shortener_base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "urls"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "delete short link",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{shortener_base_url}}/api/v1/urls/{{short_url_id}}",
+          "host": [
+            "{{shortener_base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "urls",
+            "{{short_url_id}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "restore short link",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{shortener_base_url}}/api/v1/urls/{{short_url_id}}/restore",
+          "host": [
+            "{{shortener_base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "urls",
+            "{{short_url_id}}",
+            "restore"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "swagger documentation",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{shortener_base_url}}/api/documentation",
+          "host": [
+            "{{shortener_base_url}}"
+          ],
+          "path": [
+            "api",
+            "documentation"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "سسسس",
+      "value": ""
+    }
+  ]
+}
