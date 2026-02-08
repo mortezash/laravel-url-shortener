@@ -24,6 +24,7 @@
 
 ---
 
+
 ## ⚡ نصب پروژه
 
 1. کلون کردن ریپازیتوری:
@@ -33,18 +34,20 @@ git clone https://github.com/mortezash/laravel-url-shortener.git
 cd laravel-url-shortener
 ```
 
+
 2. نصب وابستگی‌ها:
 ```bash
 composer install
 ```
 
+
 3. کپی کردن فایل .env.example و تنظیمات محیط:
 ```bash
 cp .env.example .env
 ```
+
 مقادیر دیتابیس را بر اساس محیط خود تغییر دهید:
 DB_HOST, DB_PORT, DB_DATABASE, DB_USERNAME, DB_PASSWORD
-
 
 
 4. ایجاد کلید اپلیکیشن:
@@ -61,7 +64,9 @@ php artisan migrate
 ```bash
 php artisan serve
 ```
+
 پروژه در http://localhost:8000 در دسترس است.
+
 
 ##مستندات API (Swagger)
 
@@ -82,3 +87,62 @@ http://localhost:8000/api/documentation
 ```bash
 php artisan test
 ```
+
+
+🐳 نصب و اجرا با Docker (پیشنهادی)
+برای اجرای داکر حتما باید داکر رو سیستم نصب و اجرا شده باشد
+
+1. کپی فایل محیطی
+```bash
+cp .env.example .env
+```
+
+
+2. کپی فایل محیطی
+```bash
+docker compose up --build
+```
+
+
+این دستور به صورت خودکار:
+✅ سرویس‌ها را اجرا می‌کند
+✅ دیتابیس را آماده می‌کند
+✅ اپلیکیشن را بالا می‌آورد
+
+
+| سرویس      | آدرس                                                                                                                     |
+| ---------- |--------------------------------------------------------------------------------------------------------------------------|
+| API        | [http://localhost:8020](http://localhost:8020)                                                                           |
+| Swagger    | [http://localhost:8020/api/documentation](http://localhost:8020/api/documentation)                                       |
+| phpMyAdmin | [http://localhost:8081](http://localhost:8081)      <br/> username: laravel<br/>password: secret <br/>database: laravel4 |
+
+⛔ توقف کانتینرها
+
+```bash
+docker compose down
+```
+
+حذف کامل همراه با دیتا:
+```bash
+docker compose down -v
+```
+
+♻️ اجرای مجدد از صفر
+در صورت بروز خطا:
+
+```bash
+docker compose down -v
+docker compose up --build -d
+```
+
+🧪 تست پروژه در حالت داکر
+
+```bash
+docker compose exec app php artisan test
+```
+
+✨ توسعه‌دهنده
+Developed by Morteza Shahpasand
+
+GitHub:
+https://github.com/mortezash
